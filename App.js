@@ -17,12 +17,15 @@ import { StackNavigator } from 'react-navigation';
 import Users from './screens/Users';
 import Add from './screens/Add'
 import Edit from './screens/Edit'
+import Welcome from './screens/Welcome'
 
 const AppNavigator = StackNavigator({
-    ScreenOne: { screen: Users},
-    ScreenTwo: { screen: Add},
-    ScreenThree: {screen: Edit}
-})
+  Welcome: { screen: Welcome
+},
+  ScreenOne: { screen: Users},
+  ScreenTwo: { screen: Add},
+  ScreenThree: {screen: Edit}
+}, { headerMode: 'none' })
 
 export default class App extends Component {
   render() {
