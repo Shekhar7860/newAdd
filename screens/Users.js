@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {  Card, Divider, SearchBar, List, ListItem  } from 'react-native-elements';
 import { db } from './config';
 import firebase from 'react-native-firebase';
+import { InterstitialAdManager, NativeAdsManager,  BannerView, AdSettings  } from 'react-native-fbads';
 const Banner = firebase.admob.Banner;
 const AdRequest = firebase.admob.AdRequest;
 const advert = firebase.admob().interstitial('ca-app-pub-9784974231819956/4189154772')
@@ -90,6 +91,14 @@ export default class Users extends Component {
     }
   };
   editUser = (val) => {
+    AdSettings.addTestDevice(AdSettings.currentDeviceHash);
+    InterstitialAdManager.showAd("434555400602082_434557547268534")
+  .then(didClick => {
+    console.log('working')
+  })
+  .catch(error => {
+    console.log(error, 'rror')
+  });
     if(val)
     {
     this.props.navigation.navigate('ScreenTwo', { user: val })

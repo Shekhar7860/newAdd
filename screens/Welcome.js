@@ -2,6 +2,7 @@ import {Platform, StyleSheet, Text, View, StatusBar, TouchableHighlight} from 'r
 
 import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
+import { InterstitialAdManager, NativeAdsManager,  BannerView, AdSettings  } from 'react-native-fbads';
 const Banner = firebase.admob.Banner;
 const AdRequest = firebase.admob.AdRequest;
 const advert2 = firebase.admob().rewarded('ca-app-pub-9784974231819956/4984604967')
@@ -11,7 +12,21 @@ request.addKeyword('foobar');
 export default class Welcome extends Component {
 
   componentDidMount = () => {
-    advert.loadAd(request.build());
+
+  }
+  static navigationOptions = {
+    title: "Welcome"
+  }
+  goToProducts = () => {
+    AdSettings.addTestDevice(AdSettings.currentDeviceHash);
+      InterstitialAdManager.showAd("434555400602082_434557547268534")
+    .then(didClick => {
+      console.log('working')
+    })
+    .catch(error => {
+      console.log(error, 'rror')
+    });
+         advert.loadAd(request.build());
     advert2.loadAd(request.build())
 
     advert2.on('onAdLoaded', () => {
@@ -32,11 +47,6 @@ setTimeout(() => {
     console.log('error occured')
   }
 }, 1000);
-  }
-  static navigationOptions = {
-    title: "Welcome"
-  }
-  goToProducts = () => {
     this.props.navigation.navigate('ScreenOne' )
   }
   render() {
@@ -144,7 +154,7 @@ const styles = StyleSheet.create({
   },
   footer:{
     position:'absolute',
-    bottom : 20,
+    bottom : 10,
     width : '100%'
   }
   });
