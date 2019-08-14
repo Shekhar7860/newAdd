@@ -6,25 +6,25 @@ import { InterstitialAdManager, NativeAdsManager,  BannerView, AdSettings  } fro
 const Banner = firebase.admob.Banner;
 const AdRequest = firebase.admob.AdRequest;
 const advert2 = firebase.admob().rewarded('ca-app-pub-9784974231819956/4984604967')
-const advert = firebase.admob().interstitial('ca-app-pub-6061663703850511/9597625632')
+const advert = firebase.admob().interstitial('ca-app-pub-9784974231819956/2385629260')
 const request = new AdRequest();
 request.addKeyword('foobar');
 export default class Welcome extends Component {
 
   componentDidMount = () => {
-
+  
   }
   static navigationOptions = {
     title: "Welcome"
   }
   goToProducts = () => {
     AdSettings.addTestDevice(AdSettings.currentDeviceHash);
-      InterstitialAdManager.showAd("434555400602082_434557547268534")
+    InterstitialAdManager.showAd("434555400602082_434557547268534")
     .then(didClick => {
       console.log('working')
     })
     .catch(error => {
-      console.log(error, 'rror')
+      console.log(error, 'fb add rror')
     });
          advert.loadAd(request.build());
     advert2.loadAd(request.build())
@@ -87,13 +87,12 @@ setTimeout(() => {
             </TouchableHighlight>
             <Text style={styles.messageBoxBodyText2}>If you have any query related to modicare, you can call me +919646407363</Text>
                     </View>
-
                 </View>
                 <View style={styles.footer}>
        <Banner
        style={{alignSelf:'center',marginLeft:20}}
     size={"LARGE_BANNER"}
-  unitId={"ca-app-pub-9784974231819956/7934680863"}
+  unitId={"ca-app-pub-9784974231819956/3875379295"}
   request={request.build()}
   onAdLoaded={() => {
     console.log('Advert loaded');
