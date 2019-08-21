@@ -1,16 +1,24 @@
-import {Platform, StyleSheet, Text, View, TouchableOpacity, Share,  Image, StatusBar, TouchableHighlight} from 'react-native';
+import {Platform, StyleSheet, Text, View, TouchableOpacity, TextInput,  Share,  Image, StatusBar, TouchableHighlight} from 'react-native';
 
 import React, { Component } from 'react';
 import firebase from 'react-native-firebase';
 import { InterstitialAdManager, NativeAdsManager,  BannerView, AdSettings  } from 'react-native-fbads';
 const Banner = firebase.admob.Banner;
 const AdRequest = firebase.admob.AdRequest;
-const advert2 = firebase.admob().rewarded('ca-app-pub-3372831736678620/3864091801')
-const advert = firebase.admob().interstitial('ca-app-pub-3372831736678620/1227633255')
+const advert2 = firebase.admob().rewarded('ca-app-pub-3372831736678620/1622438828')
+const advert = firebase.admob().interstitial('ca-app-pub-3372831736678620/4631745543')
 const request = new AdRequest();
 request.addKeyword('foobar');
-export default class Welcome extends Component {
-
+export default class Join extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+         mobile : '',
+         name : '', 
+         location : ''
+        };
+       
+     }
   componentDidMount = () => {
   
   }
@@ -47,7 +55,7 @@ setTimeout(() => {
     console.log('error occured')
   }
 }, 1000);
-    this.props.navigation.navigate('Join' )
+    this.props.navigation.navigate('ScreenOne' )
   }
   share = () => {
     Share.share({
@@ -63,15 +71,56 @@ setTimeout(() => {
       ]
     })
   }
+
+  setName = (name) => {
+  this.setState ({name : name})
+  }
+
+  setMobile = (mobile) => {
+    this.setState ({mobile : mobile})
+    }
+
+    setLocation = (location) => {
+        this.setState ({location : location})
+        }
+
+        submit = () => {
+            if(this.state.name && this.state.mobile && this.state.location && this.state.mobile.length == 10)
+            {
+                firebase.database().ref('requests').push({
+                    "name": this.state.name,
+                    "mobile" : this.state.mobile,
+                    "location" : this.state.location
+                   
+                }).then((data)=>{
+                    this.setState ({name : ""})
+                    this.setState ({mobile : ""})
+                    this.setState ({location : ""})
+                    alert("data received..you will receive call shortly")
+                    
+                }).catch((error)=>{
+                    //error callback
+                    console.log('error ' , error)
+                })
+            console.log('name', this.state.name, 'mobile', this.state.mobile.length, 'location', this.state.location)
+            }
+            else
+            {
+                alert("please enter valid details")
+            }
+        }
   render() {
     const { navigate } = this.props.navigation
     return (
         <View style={styles.mainContainer}>
                <View style={styles.toolbar}>
                     <Text style={styles.toolbarButton}></Text>
-                    <Text style={styles.toolbarTitle}>Home</Text>
-                    <TouchableOpacity style={styles.toolbarButton}onPress={() => this.share()}>
-                    <Image style={{width:30,marginLeft:5,  height:30}} source={require('../images/share.png')}></Image>
+                    <Text style={styles.toolbarTitle}>User Info</Text>
+                    <TouchableOpacity style={styles.toolbarButton}onPress={() => this.goToProducts()}>
+                    <Text style={{color:'#fff',
+        fontWeight:'bold',
+        flex:1,
+        fontSize:20     }}> Skip </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
@@ -79,20 +128,26 @@ setTimeout(() => {
  
                     <View style={styles.messageBox}>
                        
-                            <Text style={styles.topText}>Welcome Mesage</Text>
+                            <Text style={styles.topText}>Want To Join Modicare?</Text>
                        
-                            <Text style={styles.messageBoxBodyText}>Hello everyone, Here is an application that can help you knowing about specific prices list, business volume points and quantity of modicare products. You can check the pictures of products as well as search for a specific modicare product. All of these products are available at the modicare distribution point. So, To get started, click on the button below</Text>
-                            <TouchableHighlight style={styles.fullWidthButton} onPress={() => this.goToProducts()}>
-            <Text style={styles.fullWidthButtonText}>Let's get started</Text>
+                            <Text style={styles.messageBoxBodyText}>Fill Details</Text>
+                            <TextInput style={styles.textInputWidth} placeholder="Enter Name" value={this.state.name} onChangeText={(text)=>
+                    this.setName(text)}   keyboardType='default'></TextInput>
+                    <TextInput style={styles.textInputWidth} placeholder="Enter Mobile" value={this.state.mobile} onChangeText={(text)=>
+                    this.setMobile(text)} keyboardType='numeric' maxLength={10}></TextInput>
+                     <TextInput style={styles.textInputWidth} placeholder="Enter Location" value={this.state.location} onChangeText={(text)=>
+                    this.setLocation(text)} ></TextInput>
+                            <TouchableHighlight style={styles.fullWidthButton} onPress={() => this.submit()}>
+            <Text style={styles.fullWidthButtonText}>Submit</Text>
             </TouchableHighlight>
-            <Text style={styles.messageBoxBodyText2}>If you have any query related to modicare, you can call me +919646407363</Text>
+            <Text style={styles.messageBoxBodyText2}>If you have any query related to modicare, you can call me +917626879728</Text>
                     </View>
                 </View>
                 <View style={styles.footer}>
        <Banner
        style={{alignSelf:'center',marginLeft:20}}
     size={"LARGE_BANNER"}
-  unitId={"ca-app-pub-3372831736678620/5368745160"}
+  unitId={"ca-app-pub-3372831736678620/2963440653"}
   request={request.build()}
   onAdLoaded={() => {
     console.log('Advert loaded');
@@ -130,7 +185,8 @@ const styles = StyleSheet.create({
       flex:1                //Step 2
   },
   messageBox:{
-    alignItems : 'center'
+    alignItems : 'center',
+    width:'100%'
   },
   messageBoxBodyText:{
     margin:10,
@@ -155,6 +211,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems : 'center'
   },
+  textInputWidth : {
+      width : '80%',
+      borderWidth:1,
+      borderRadius:20,
+      marginBottom:10
+  }, 
   fullWidthButton: {
     backgroundColor: 'blue',
     height:50,

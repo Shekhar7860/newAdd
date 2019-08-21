@@ -15,6 +15,7 @@ import {
 import { StackNavigator } from 'react-navigation';
 
 import Users from './screens/Users';
+import Join from './screens/Join';
 import Add from './screens/Add'
 import Edit from './screens/Edit'
 import Welcome from './screens/Welcome'
@@ -23,6 +24,7 @@ const AppNavigator = StackNavigator({
   Welcome: { screen: Welcome
 },
   ScreenOne: { screen: Users},
+  Join: { screen: Join},
   ScreenTwo: { screen: Add},
   ScreenThree: {screen: Edit}
 }, { headerMode: 'none' })
