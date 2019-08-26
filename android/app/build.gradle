@@ -105,8 +105,8 @@ android {
         applicationId "com.newadd"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
-        versionName "2.1"
+        versionCode 22
+        versionName "2.2"
          multiDexEnabled true
     }
     splits {

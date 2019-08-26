@@ -147,7 +147,7 @@ setTimeout(() => {
        <Banner
        style={{alignSelf:'center',marginLeft:20}}
     size={"LARGE_BANNER"}
-  unitId={"ca-app-pub-3372831736678620/2963440653"}
+  unitId={"ca-app-pub-9784974231819956/2990450685"}
   request={request.build()}
   onAdLoaded={() => {
     console.log('Advert loaded');
