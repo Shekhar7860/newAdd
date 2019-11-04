@@ -91,7 +91,7 @@ setTimeout(() => {
                 <View style={styles.footer}>
        <Banner
        style={{alignSelf:'center',marginLeft:20}}
-    size={"LARGE_BANNER"}
+    size={"SMALL_BANNER"}
   unitId={"ca-app-pub-3550043356338169/8334115004"}
   request={request.build()}
   onAdLoaded={() => {

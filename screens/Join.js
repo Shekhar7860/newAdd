@@ -87,21 +87,36 @@ setTimeout(() => {
         submit = () => {
             if(this.state.name && this.state.mobile && this.state.location && this.state.mobile.length == 10)
             {
-                firebase.database().ref('requests').push({
-                    "name": this.state.name,
-                    "mobile" : this.state.mobile,
-                    "location" : this.state.location
-                   
-                }).then((data)=>{
-                    this.setState ({name : ""})
-                    this.setState ({mobile : ""})
-                    this.setState ({location : ""})
-                    alert("data received..you will receive call shortly")
-                    
-                }).catch((error)=>{
-                    //error callback
-                    console.log('error ' , error)
-                })
+              firebase.database().ref('requests')
+              .once('value')
+              .then((snapshot) => {
+                console.log(snapshot.numChildren(), 'fkkfkfk')
+                if(snapshot.numChildren() < 50)
+                {
+                  firebase.database().ref('requests').push({
+                  "name": this.state.name,
+                  "mobile" : this.state.mobile,
+                  "location" : this.state.location
+                 
+                    }).then((data)=>{
+                  this.setState ({name : ""})
+                  this.setState ({mobile : ""})
+                  this.setState ({location : ""})
+                  alert("data received..you will receive call shortly")
+                  
+                    }).catch((error)=>{
+                        //error callback
+                        console.log('error ' , error)
+                    })
+                }
+                else{
+                  alert("an error occured! please try again after some time ")
+                }
+                
+              })
+              .catch((error) => { } );
+             
+               
             console.log('name', this.state.name, 'mobile', this.state.mobile.length, 'location', this.state.location)
             }
             else
@@ -146,7 +161,7 @@ setTimeout(() => {
                 <View style={styles.footer}>
        <Banner
        style={{alignSelf:'center',marginLeft:20}}
-    size={"LARGE_BANNER"}
+    size={"SMALL_BANNER"}
   unitId={"ca-app-pub-9784974231819956/2990450685"}
   request={request.build()}
   onAdLoaded={() => {
